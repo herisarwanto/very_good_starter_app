@@ -1,20 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:injectable/injectable.dart';
-import 'package:very_good_starter_app/common/network/interceptors/token_interceptor.dart';
 import 'package:very_good_starter_app/common/network/interceptors/url_interceptor.dart';
+import 'package:very_good_starter_app/common/utils/name_constant.dart';
 
 @LazySingleton(as: Dio)
-@Named('public_dio')
+@Named(NameConstant.publicDio)
 class DioModule with DioMixin implements Dio {
-  final UrlInterceptor _urlInterceptor;
-  final TokenInterceptor _tokenInterceptor;
+  final BaseUrlInterceptor _baseUrlInterceptor;
 
   DioModule(
-    UrlInterceptor urlInterceptor,
-    TokenInterceptor tokenInterceptor,
-    this._urlInterceptor,
-    this._tokenInterceptor,
+    this._baseUrlInterceptor,
   ) {
     final newOptions = BaseOptions(
       contentType: 'application/json',
@@ -28,10 +24,8 @@ class DioModule with DioMixin implements Dio {
 
     options = newOptions;
     interceptors.addAll([
-      _urlInterceptor,
-      _tokenInterceptor,
+      _baseUrlInterceptor,
     ]);
-
     httpClientAdapter = IOHttpClientAdapter();
   }
 }

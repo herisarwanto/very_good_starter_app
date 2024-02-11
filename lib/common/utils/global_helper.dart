@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:very_good_starter_app/common/utils/constant.dart';
 import 'package:very_good_starter_app/common/utils/name_constant.dart';
 
 class GlobalHelper {
@@ -24,10 +25,10 @@ class GlobalHelper {
         if (error.type == DioExceptionType.badResponse) {
           final response = error.response;
           if (response != null && response.data != null) {
-            final responseData = jsonDecode(response.data as String) as Map;
+            final responseData = response.data as Map<String, dynamic>? ?? {};
             data = ResponseModel(
-                message: responseData['message'] as String,
-                statusCode: response.statusCode ?? -1);
+                message: responseData['message'] as String? ?? 'Unknown Error',
+                statusCode: response.statusCode ?? 404);
           }
         } else if (error.type == DioExceptionType.connectionTimeout ||
             error.type == DioExceptionType.receiveTimeout ||
@@ -70,6 +71,11 @@ class GlobalHelper {
   static bool isValidEmail(String email) {
     if (email.isEmpty) return false;
     return RegExp(r'^.+@.+\..+$').hasMatch(email);
+  }
+
+  /// Format date like : 2024-02-01
+  static String formatDate(DateTime date) {
+    return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
   }
 }
 

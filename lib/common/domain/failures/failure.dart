@@ -7,11 +7,14 @@ class Failure extends Equatable {
 
 class DataFailure extends Failure {
   DataFailure({
-    required this.message,
+    this.code = -1,
+    this.message = 'Unknown Error',
   });
 
-  final String message;
+  final int? code;
+
+  final String? message;
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [code!, message!];
 }

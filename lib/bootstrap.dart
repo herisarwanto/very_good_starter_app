@@ -25,6 +25,9 @@ Future<void> bootstrap(
   FutureOr<Widget> Function() builder, {
   required String environment,
 }) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies(environment: environment);
+
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
@@ -35,8 +38,4 @@ Future<void> bootstrap(
     () async => runApp(await builder()),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
-
-  WidgetsFlutterBinding.ensureInitialized();
-  await configureDependencies(environment: environment);
-
 }
