@@ -27,7 +27,6 @@ Future<void> bootstrap(
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies(environment: environment);
-  // await SharedPreferences.getInstance();
 
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
