@@ -11,7 +11,7 @@ dependencies:
   bloc_concurrency: ^0.2.3
   build_runner_core: ^7.3.0
   cached_network_image: ^3.3.1
-  change_case: ^1.0.2
+  change_case: ^2.0.1
   crypto: ^3.0.2
   dartz: ^0.10.1
   dio: ^5.4.0
