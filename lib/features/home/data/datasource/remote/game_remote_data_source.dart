@@ -9,7 +9,7 @@ import 'package:very_good_starter_app/common/utils/name_constant.dart';
 import 'package:very_good_starter_app/common/utils/url_constant.dart';
 import 'package:very_good_starter_app/features/home/data/models/game_model.dart';
 
-sealed class GameRemoteDataSource {
+abstract class GameRemoteDataSource {
   Future<Either<Failure, List<GameModel>>> getGames(
       {required String dates,
       required String ordering,

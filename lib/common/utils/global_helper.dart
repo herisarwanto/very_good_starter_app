@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:very_good_starter_app/common/utils/constant.dart';
 import 'package:very_good_starter_app/common/utils/name_constant.dart';
 
 class GlobalHelper {
@@ -27,7 +25,7 @@ class GlobalHelper {
           if (response != null && response.data != null) {
             final responseData = response.data as Map<String, dynamic>? ?? {};
             data = ResponseModel(
-                message: responseData['message'] as String? ?? 'Unknown Error',
+                message: responseData['message'] as String? ?? 'Not Found',
                 statusCode: response.statusCode ?? 404);
           }
         } else if (error.type == DioExceptionType.connectionTimeout ||

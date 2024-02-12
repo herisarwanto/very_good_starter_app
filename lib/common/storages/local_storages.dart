@@ -20,7 +20,12 @@ class LocalStorageImpl implements LocalStorage {
   }
 
   @override
-  void setAccessToken(String accessToken) async {
-    _storage.setString(NameConstant.accessTokenKey, accessToken);
+  Future<void> setAccessToken(String accessToken) async {
+    final result =
+        await _storage.setString(NameConstant.accessTokenKey, accessToken);
+
+    if (result == false) {
+      throw Exception('Failed to set access token');
+    }
   }
 }

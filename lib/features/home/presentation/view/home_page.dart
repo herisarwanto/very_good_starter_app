@@ -13,11 +13,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late HomeBloc _homeBloc;
+
   @override
   void initState() {
     _homeBloc = getIt<HomeBloc>();
+
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

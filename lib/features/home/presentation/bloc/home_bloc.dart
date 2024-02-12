@@ -17,15 +17,6 @@ part 'home_event.dart';
 
 part 'home_state.dart';
 
-const _pageSize = 20;
-const throttleDuration = Duration(milliseconds: 100);
-
-EventTransformer<E> throttleDroppable<E>(Duration duration) {
-  return (events, mapper) {
-    return droppable<E>().call(events.throttle(duration), mapper);
-  };
-}
-
 @injectable
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc(this._getGames) : super(HomeState()) {
@@ -65,7 +56,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           state.copyWith(
             status: StateEnum.success,
             games: games,
-            hasReachedMax: ((games ?? []).length < _pageSize) ? true : false,
+            hasReachedMax: (games?.length ?? 0) < _pageSize,
           ),
         );
       } else {
@@ -83,13 +74,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final result2 = await _getGames.call(params);
     if (result2.isRight()) {
       final games = result2.getRight() ?? [];
+      final reachedMax = games.isEmpty || games.length < _pageSize;
       games.isEmpty
           ? emit(state.copyWith(hasReachedMax: true))
           : emit(
               state.copyWith(
                 status: StateEnum.success,
                 games: List.of(state.games)..addAll(games),
-                hasReachedMax: false,
+                hasReachedMax: reachedMax,
               ),
             );
     } else {
@@ -101,3 +93,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 }
+
+const _pageSize = 20;
+const throttleDuration = Duration(milliseconds: 100);
+
+EventTransformer<E> throttleDroppable<E>(Duration duration) {
+  return (events, mapper) {
+    return droppable<E>().call(events.throttle(duration), mapper);
+  };
+}
+
