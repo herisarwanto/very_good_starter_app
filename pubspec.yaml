@@ -14,7 +14,7 @@ dependencies:
   change_case: ^1.0.2
   crypto: ^3.0.2
   dartz: ^0.10.1
-  dio: ^5.4.0
+  dio: ^5.4.1
   equatable: ^2.0.3
   flutter:
     sdk: flutter
