@@ -1,11 +1,20 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url 'https://storage.googleapis.com/download.flutter.io' }
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://storage.googleapis.com/download.flutter.io' }
+    }
+}
+
+rootProject.name = 'very_good_starter_app'
 include ':app'
-
-def localPropertiesFile = new File(rootProject.projectDir, "local.properties")
-def properties = new Properties()
-
-assert localPropertiesFile.exists()
-localPropertiesFile.withReader("UTF-8") { reader -> properties.load(reader) }
-
-def flutterSdkPath = properties.getProperty("flutter.sdk")
-assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
-apply from: "$flutterSdkPath/packages/flutter_tools/gradle/app_plugin_loader.gradle"
